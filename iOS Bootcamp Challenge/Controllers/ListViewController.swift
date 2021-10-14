@@ -103,7 +103,15 @@ class ListViewController: UICollectionViewController {
 
     // MARK: - Navigation
 
-    // TODO: Handle navigation to detail view controller
+    //Handle navigation to detail view controller
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+           let storyboard = UIStoryboard(name: "Main", bundle: nil)
+           guard let detailView = storyboard.instantiateViewController(identifier: "DetailView") as? DetailViewController else { return }
+            detailView.pokemon = pokemons[indexPath.row]
+            detailView.modalPresentationStyle = .fullScreen
+            self.present(detailView, animated: true)
+       }
 
     // MARK: - UI Hooks
 

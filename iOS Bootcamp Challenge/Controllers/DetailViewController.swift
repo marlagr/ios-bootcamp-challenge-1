@@ -8,7 +8,11 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    
+    @IBOutlet weak var image: UIImageView!
+    
+    @IBOutlet weak var name: UILabel!
+    
     static let segueIdentifier = "goDetailViewControllerSegue"
     private let margin: CGFloat = 20
 
@@ -16,19 +20,21 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokemon else { return nil }
         let gradient = PokemonColor.typeLinearGradient(name: pokemon.primaryType())
         gradient.frame = view.bounds
+
+        
         return gradient
     }
 
     var pokemon: Pokemon?
-
+    
     lazy private var closeButon: UIButton = {
         let button = UIButton(type: .close)
         button.addTarget(self, action: #selector(closeButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
-    lazy private var nameLabel: UILabel = {
+    
+        lazy private var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
         label.font = UIFont.boldSystemFont(ofSize: 30)

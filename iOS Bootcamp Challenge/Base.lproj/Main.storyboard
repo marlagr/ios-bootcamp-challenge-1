@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUS-ae-Xmt">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -42,20 +43,50 @@
             </objects>
             <point key="canvasLocation" x="1232" y="344"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--DetailView-->
         <scene sceneID="LPt-uv-F5R">
             <objects>
-                <viewController id="hta-OE-VYE" customClass="DetailViewController" customModule="iOS_Bootcamp_Challenge" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailView" title="DetailView" id="hta-OE-VYE" customClass="DetailViewController" customModule="iOS_Bootcamp_Challenge" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P9H-G3-H8u">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PokeBall" translatesAutoresizingMaskIntoConstraints="NO" id="RCE-z4-xQc">
+                                <rect key="frame" x="87" y="103" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="EKO-kX-ZUi"/>
+                                    <constraint firstAttribute="width" constant="240" id="HaE-Wq-Db1"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKi-m8-cfe">
+                                <rect key="frame" x="136" y="239" width="143" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="dyk-te-kxn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="CUV-dm-0NS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="RCE-z4-xQc" firstAttribute="top" secondItem="CUV-dm-0NS" secondAttribute="top" constant="103" id="7Od-f9-caU"/>
+                            <constraint firstItem="CUV-dm-0NS" firstAttribute="trailing" secondItem="RCE-z4-xQc" secondAttribute="trailing" constant="87" id="Csp-GD-b9D"/>
+                            <constraint firstItem="RCE-z4-xQc" firstAttribute="leading" secondItem="CUV-dm-0NS" secondAttribute="leading" constant="87" id="HTO-re-xDO"/>
+                            <constraint firstItem="WKi-m8-cfe" firstAttribute="top" secondItem="RCE-z4-xQc" secondAttribute="bottom" constant="8" id="O28-cB-WtO"/>
+                            <constraint firstItem="CUV-dm-0NS" firstAttribute="trailing" secondItem="WKi-m8-cfe" secondAttribute="trailing" constant="135" id="Ptl-Pk-gcQ"/>
+                            <constraint firstItem="WKi-m8-cfe" firstAttribute="leading" secondItem="CUV-dm-0NS" secondAttribute="leading" constant="136" id="eJj-aJ-V9p"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="image" destination="RCE-z4-xQc" id="oX0-rx-Rrb"/>
+                        <outlet property="name" destination="WKi-m8-cfe" id="vqv-Bh-adF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mf3-XU-Ngc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2339" y="344"/>
+            <point key="canvasLocation" x="2337.68115942029" y="343.52678571428572"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8iP-ue-eOF">
@@ -76,6 +107,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="PokeBall" width="10" height="10"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
