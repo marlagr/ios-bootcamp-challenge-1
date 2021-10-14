@@ -107,24 +107,34 @@ class ListViewController: UICollectionViewController {
 
     // MARK: - UI Hooks
 
-    @objc func refresh() {
+    @objc func refresh()  {
+        let group = DispatchGroup()
         shouldShowLoader = true
 
         var pokemons: [Pokemon] = []
 
-        // TODO: Wait for all requests to finish before updating the collection view
-
-        PokeAPI.shared.get(url: "pokemon?limit=30", onCompletion: { (list: PokemonList?, _) in
-            guard let list = list else { return }
-            list.results.forEach { result in
-                PokeAPI.shared.get(url: "/pokemon/\(result.id)/", onCompletion: { (pokemon: Pokemon?, _) in
-                    guard let pokemon = pokemon else { return }
-                    pokemons.append(pokemon)
-                    self.pokemons = pokemons
-                    self.didRefresh()
-                })
-            }
-        })
+        // Wait for all requests to finish before updating the collection view
+            group.enter()
+            PokeAPI.shared.get(url: "pokemon?limit=30", onCompletion: { (list: PokemonList?, _) in
+                guard let list = list else { return }
+                group.leave()
+                list.results.forEach { result in
+                    group.enter()
+                    PokeAPI.shared.get(url: "/pokemon/\(result.id)/", onCompletion: { (pokemon: Pokemon?, _) in
+                        guard let pokemon = pokemon else { return }
+                        pokemons.append(pokemon)
+                        self.pokemons = pokemons
+                        self.didRefresh()
+                        group.leave()
+                    })
+                }
+            })
+        
+        group.notify(queue: .main) {
+            self.didRefresh()
+            self.shouldShowLoader = false
+        }
+   
     }
 
     private func didRefresh() {
