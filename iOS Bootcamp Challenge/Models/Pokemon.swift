@@ -27,13 +27,35 @@ enum PokemonType: String, Decodable, CaseIterable, Identifiable {
 
 }
 
-struct Pokemon: Decodable, Equatable {
+struct PokeItem: Decodable {
+    var name: String
+    var url: String
 
+}
+
+struct PokeAbility: Decodable {
+    let ability: PokeItem
+    let slot: Int
+    let is_hidden: Bool
+}
+
+struct PokeTypes: Decodable {
+    let type: PokeItem
+    let slot: Int
+}
+
+
+struct Pokemon: Decodable, Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    
     let id: Int
     let name: String
     let image: String?
-    let types: [String]?
-    let abilities: [String]?
+    var types: [String]?
+    var abilities: [String]?
     let weight: Float
     let baseExperience: Int
 
@@ -62,18 +84,29 @@ struct Pokemon: Decodable, Equatable {
         let officialArtWork = try other.nestedContainer(keyedBy: CodingKeys.self, forKey: .officialArtwork)
         self.image = try? officialArtWork.decode(String.self, forKey: .frontDefault)
 
-        // TODO: Decode list of types & abilities
-
-        self.types = []
+        //Decode list of types & abilities
+        let nestedAbilities = try? container.decode([PokeAbility].self, forKey: .abilities)
         self.abilities = []
-
+        for child in nestedAbilities! {
+            abilities?.append(child.ability.name)
+        }
+        
+        let nestedTypes = try? container.decode([PokeTypes].self, forKey: .types)
+        self.types = []
+        for child in nestedTypes! {
+            types?.append(child.type.name)
+        }
+    
+        
         self.weight = try container.decode(Float.self, forKey: .weight)
         self.baseExperience = try container.decode(Int.self, forKey: .baseExperience)
     }
 
 }
 
+
 extension Pokemon {
+    
 
     func formattedNumber() -> String {
         String(format: "#%03d", arguments: [id])
